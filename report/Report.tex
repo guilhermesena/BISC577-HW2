@@ -23,7 +23,7 @@ The source code for each specific section of this report are on the root folder 
 
 
 \section{High throughput binding assays}
-\textbf{SELEX-Seq} (Systematic Evolution of Ligands by Exponential Enrichment, aka in vitro selection): It is a method for characterizing the complete repertoire of binding site preference for transcription factor complexes. It consists of constructing a DNA library on an array and introducing the desired TF to the array, which allows us to quantify which k-mers the protein prefers to bind to, the major drawback being that we are limited to small k-mers (10~14 tops) as the number of possible k-mers grows exponentially with its size.\\
+\textbf{SELEX-Seq} (Systematic Evolution of Ligands by Exponential Enrichment, aka in vitro selection): It is a method for characterizing the complete repertoire of binding site preference for transcription factor complexes. It consists of constructing a DNA library on an array and introducing the desired TF to the array, which allows us to quantify which k-mers the protein prefers to bind to, the major drawback being that we are limited to small k-mers (10 to 14 max) as the number of possible k-mers grows exponentially with the k-mer size.\\
 \\
 \textbf{PBM} (Protein Binding Microarray): In terms of experimental design, PBM is the reverse of SELEX and measures the DNA affinity to transcription factors. This time proteins are the ones bound to an array and DNA probes are allowed to flow freely in the solution. If they bind to the array proteins, they can be later amplified by PCR and sequenced to quantify the k-mers that have binding specificity to the proteins in the array. The disadvantage of this method is that we can't do genome-wide studies of TF binding through this method as we need to have previous knowledge of what proteins to insert into the array. \\
 \\
@@ -31,8 +31,26 @@ The source code for each specific section of this report are on the root folder 
 
 \section{Preparation of high throughput in vitro data analysis}
 
+I used the r portal to download R-3.3.0 for unix and the bioconductor source within R to download DNAshapeR through the biocLite() module. I also use the built-in install.packages() module to download caret from the R could mirror.
 
 \section{Build prediction models for in vitro data}
+
+The source code for this problem can be found at file \textbf{question\_4.r}. I used caret to train a model through L2-regularization to predict the binding affinity of DNA sequences. I compared two cases: using only the 1-mer feature or the 1-mer+shape by using shape data from the DNA, and the makeSummary() function in the source code returns the maximum average R-squared for the simulation. These are the values I obtained for the 3 given input files: \\
+
+\begin{center}
+\begin{tabular}{ | l | c | c | r | }
+\hline
+   & Mad & Max & Myc \\
+\hline
+  1-mer & 0.775 & 0.785 & 0.778 \\
+\hline  
+  1-shape & 0.863 & 0.864 & 0.855 \\
+\hline
+\end{tabular}
+\end{center}
+\\
+We notice qualitatively that adding the shape feature increases the model performance. 
+
 \section{High throughput in vitro data analysis}
 \section{Preparation of high throughput in vivo data analysis}
 \section{High throughput in vivo data analysis}
