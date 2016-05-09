@@ -4,7 +4,6 @@ library(stats)
 
 # I wrote the previous rsq values on a txt file
 rsq <- read.table("in/rsq.txt")
-y_x <- seq(0.70, 0.80, 0.0001)
 
 # Plot the values
 plot(as.numeric(rsq[1,]), as.numeric(rsq[2,]), xlab = "1-mer", ylab = "1-mer+shape", 
