@@ -48,12 +48,37 @@ The source code for this problem can be found at file \textbf{question\_4.r}. I 
 \hline
 \end{tabular}
 \end{center}
-\\
-We notice qualitatively that adding the shape feature increases the model performance. 
+
+Of course, the algorithm for model generation is randomized so the values we obtain for $R^2$ are slightly different each time we run it, but they always revolve around those values. We thus notice qualitatively that adding the shape feature increases the model performance. 
 
 \section{High throughput in vitro data analysis}
+
+The plot for the above table is given in figure 1, and the code to built the plot and calculate the p-value is given in \textbf{question\_5.r}. 
+
+\begin{figure}
+\includegraphics[scale=0.5]{figure1}
+\caption{comparison of $R^2$ averages for each dataset.}
+\end{figure}
+
+Since our dataset consists of two paired samples which do not necessarily follow a normal distribution, the Wilcoxon matched pair test was used to calculate the p-value using the \emph{coin} library's built-in wilcox.test() function. A p-value of 0.1 was found, and since it is higher than 0.05, we cannot discard the null hypothesis that the $R^2$ values for 1-mer and 1-mer+shape are uncorrelated. 
+
 \section{Preparation of high throughput in vivo data analysis}
+The source \textbf{question\_6.r} has the code used to download the AH28451 dataset from AnnotationHub into a file called \textbf{mmus.fa} that was saved inside the in directory (not shown in GitHub). We used width=400 to obtain 42,000 sequences of length 400. 
+
 \section{High throughput in vivo data analysis}
+
+The plots given by DNAshapeR are given on figure 2. From the dataset we can infer that the center region of the CTCF binding site have larger minor groove width, rool and propeller twist and smaller helix twist. We can hypothesize that the minor groove opening and the smaller twist stress in the DNA double helix are important factors for the CTCF specificity. We also know that CTCF binds to the CCCTC motif, so it is possible that the motif itself may cause such behaviour in the DNA shape. 
+
+\begin{figure}
+\includegraphics[scale=0.4]{figure_2}
+\caption{Minor Groove Width (top-left), propeller-twist(top-right), roll(bottom-left) and helix twist (bottom-right) for the CTCF transcription factor binding sites}
+\end{figure}
 \section{Build prediction models for in vivo data analysis}
+The code to generate non-overlapping regions and plot the ROC curve for the logistic regression model is in \textbf{question\_8.r}. The idea is to create a new feature \emph{isBound} that will be 1 for the dataset downloaded by AnnotationHub and 0 for the random manually generated sequences. Afterwards we train the model by adjusting a logistic function and a threshold and analyse the area under curve from the precision/recall plot to measure the prediction accuracy (AUC = 1 means a perfect model and AUC = 0.5 means a totally random guess). The two AUC plots are shown on Figure 3. For 1-mer we have an AUC of 0.835 and for 1-mer+shape we have an AUC of 0.782, from which we can infer that the sequence itself is sufficient to predict binding specificity and adding the shape feature decreases the prediction performance. 
+\begin{figure}
+\includegraphics[scale=0.3]{figure3}
+\caption{ROC curves for prediction model with 1-mer (left) and 1-mer+shape (right) features. }
+\end{figure}
+
 
 \end{document}
